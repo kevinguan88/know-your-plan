@@ -2,7 +2,7 @@
 import Navbar from './components/navbar';
 import './globals.css';
 import Link from 'next/link';
-import { AuthProvider } from '@/context/AuthContext';
+import { AuthProvider } from '@/app/context/AuthContext';
 
 export const metadata = {
   title: 'My App',
