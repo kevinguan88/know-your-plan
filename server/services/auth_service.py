@@ -20,5 +20,14 @@ def create_user(email, password):
 def login_user(email, password):
     db = get_db()
     
+    user = db.users.find_one({"email": email})
+    if not user:
+        return None, "User not found"
+    
+    if not UserModel.check_password(user, password):
+        return None, "Incorrect password"
+    
+    return "Login successful", None
+    
     
  

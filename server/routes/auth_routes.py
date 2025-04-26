@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from services.auth_service import create_user, login_user
+from utils.jwt_utils import generate_jwt_token
 
 auth_bp = Blueprint("auth", __name__)
 
@@ -17,3 +18,22 @@ def route():
         return jsonify({"error": error}), 400
     
     return jsonify({"message": "User succesfully created"}), 201
+
+@auth_bp.route("/login", methods=["POST"])
+def login():
+    data = request.form
+    email = data.get("email")
+    password = data.get("password")
+    
+    if not email or not password:
+        return jsonify({"errpr": "Email and password required"}), 400
+    
+    
+    message, error = login_user(email, password)
+    token = generate_jwt_token(email)
+    
+    return jsonify({"message": message, "token": token}), 200 if not error else 400
+    
+
+
+
