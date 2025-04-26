@@ -5,7 +5,7 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
       <section className="bg-[#BBDEFB] py-16">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 flex justify-between items-center">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-bold text-[#002c5e] mb-4">Plans as Clear as You Deserve</h1>
             <p className="text-lg text-[#444444] mb-6">
@@ -21,13 +21,13 @@ export default function Home() {
                 pmc
               </Link>
             </p>
-            <Link
-              href="/get-started"
-              className="bg-[#ff8c38] hover:bg-[#f07b20] text-white px-8 py-4 rounded-md text-xl font-medium inline-block"
-            >
-              Get Started
-            </Link>
           </div>
+          <Link
+            href="/upload"
+            className="bg-[#ff8c38] hover:bg-[#f07b20] text-white px-8 py-4 rounded-md text-xl font-medium"
+          >
+            Get Started
+          </Link>
         </div>
       </section>
 
