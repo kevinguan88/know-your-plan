@@ -5,7 +5,6 @@ from flask import jsonify
 
 def create_user(email, password):
     user = UserModel.create_user(email, password)
-    
     try:
         db = get_db()
 

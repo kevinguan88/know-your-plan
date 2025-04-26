@@ -26,10 +26,13 @@ def login():
     password = data.get("password")
     
     if not email or not password:
-        return jsonify({"errpr": "Email and password required"}), 400
+        return jsonify({"error": "Email and password required"}), 400
     
     
     message, error = login_user(email, password)
+    if error:
+        return jsonify({"error": error}), 400
+    
     token = generate_jwt_token(email)
     
     return jsonify({"message": message, "token": token}), 200 if not error else 400
