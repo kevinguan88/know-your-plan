@@ -6,7 +6,7 @@ auth_bp = Blueprint("auth", __name__)
 
 @auth_bp.route("/create-user", methods=["POST"])
 def route():
-    data = request.form
+    data = request.get_json()
     email = data.get("email")
     password = data.get("password")
     
@@ -22,7 +22,7 @@ def route():
 
 @auth_bp.route("/login", methods=["POST"])
 def login():
-    data = request.form
+    data = request.get_json()
     email = data.get("email")
     password = data.get("password")
     
