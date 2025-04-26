@@ -1,6 +1,5 @@
 from flask import Flask
 from flask_cors import CORS
-from db_config.mongo_connect import mongo
 from routes.auth_routes import auth_bp
 from routes.insurance_summary_route import summarize_bp
 
