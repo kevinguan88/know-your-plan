@@ -2,6 +2,7 @@
 import Navbar from './components/navbar';
 import './globals.css';
 import Link from 'next/link';
+import { AuthProvider } from '@/context/AuthContext';
 
 export const metadata = {
   title: 'My App',
@@ -13,7 +14,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <Navbar />
-        <main>{children}</main>
+        <AuthProvider>
+          <main>{children}</main>
+        </AuthProvider>
       </body>
     </html>
   );
