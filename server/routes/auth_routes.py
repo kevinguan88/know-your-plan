@@ -12,5 +12,8 @@ def route():
     if not email or not password:
         return jsonify({"error": "Email and password are required"}), 400
     
-    create_user(email, password)
-    return jsonify({"message": "User created successfully"}), 201
+    user, error = create_user(email, password)
+    if error:
+        return jsonify({"error": error}), 400
+    
+    return jsonify({"message": "User succesfully created"}), 201

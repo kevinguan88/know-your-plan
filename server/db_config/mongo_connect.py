@@ -8,7 +8,8 @@ MONGO_URI = os.getenv("MONGO_URI")
 def get_db():
     try:
         client = MongoClient(MONGO_URI)
-        db = client["insurance_db"]
+        db = client["know-your-plan-db"]
+        
         return db
     except Exception as e:
         print(f"Error connecting to MongoDB: {e}")
