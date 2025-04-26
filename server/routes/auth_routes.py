@@ -17,7 +17,8 @@ def route():
     if error:
         return jsonify({"error": error}), 400
     
-    return jsonify({"message": "User succesfully created"}), 201
+    token = generate_jwt_token(email)
+    return jsonify({"message": "User succesfully created", "token": token}), 201
 
 @auth_bp.route("/login", methods=["POST"])
 def login():
@@ -37,6 +38,3 @@ def login():
     
     return jsonify({"message": message, "token": token}), 200 if not error else 400
     
-
-
-
