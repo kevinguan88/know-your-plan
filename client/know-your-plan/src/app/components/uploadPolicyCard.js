@@ -1,8 +1,34 @@
 "use client"
 
 import { FileText } from 'lucide-react'
+import { useState } from 'react'
 
 export default function UploadPolicyCard() {
+    const [file, setFile] = useState(null)
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        if (!file) return alert('Please select a file.');
+    
+        const formData = new FormData();
+        formData.append('file', file);
+    
+        try {
+          const res = await fetch('https://your-api-on-render.com/upload', {
+            method: 'POST',
+            body: formData,
+          });
+    
+          const data = await res.json();
+          console.log(data);
+          alert('File uploaded successfully!');
+        } catch (error) {
+          console.error(error);
+          alert('Something went wrong.');
+        }
+      };
+
   return (
     <div className="w-full max-w-3xl p-12 mx-auto bg-white rounded-3xl shadow-lg">
       <div className="flex flex-col items-center text-center">
@@ -15,10 +41,44 @@ export default function UploadPolicyCard() {
         <p className="mb-12 text-xl text-gray-800 max-w-2xl">
           Upload your insurance document (PDF or DOC) to generate your summary!
         </p>
-
-        <button className="px-8 py-4 text-xl font-medium text-white bg-orange-400 rounded-lg hover:bg-orange-500 transition-colors">
-          Upload Document
-        </button>
+        
+        <form onSubmit={handleSubmit}>
+            {!file && (
+              <label className="px-8 py-4 text-xl font-medium text-white bg-orange-400 rounded-lg hover:bg-orange-500 transition-colors cursor-pointer">
+                Upload Document
+                <input 
+                  type="file" 
+                  accept="application/pdf" 
+                  onChange={(e) => setFile(e.target.files[0])} 
+                  className="hidden"
+                />
+              </label>
+            )}
+            
+            {file && (
+              <>
+                <div className="mt-4 text-gray-700 text-lg flex items-center">
+                  Selected File: <span className="font-semibold">{file.name}</span>
+                  <button 
+                    type="button"
+                    className="ml-2 text-gray-600 hover:text-gray-800 focus:outline-none transition-colors"
+                    onClick={() => setFile(null)}
+                  >
+                    &times;
+                  </button>
+                </div>
+                <button 
+                  type="submit"
+                  className="mt-6 px-8 py-3 bg-[#2f5bea] text-white rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  Submit
+                </button>
+              </>
+            )}
+            
+            
+        </form>
+        
       </div>
     </div>
   )
