@@ -1,6 +1,5 @@
 from db_config.mongo_connect import get_db
 from models.user_model import UserModel
-from flask import jsonify
 #CRUD operatons for users
 
 def create_user(email, password):
@@ -29,4 +28,3 @@ def login_user(email, password):
     return "Login successful", None
     
     
- 
