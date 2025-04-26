@@ -1,4 +1,5 @@
 // app/layout.js
+import Navbar from './components/navbar';
 import './globals.css';
 import Link from 'next/link';
 
@@ -11,12 +12,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <nav style={{ padding: '1rem', borderBottom: '1px solid #ccc' }}>
-          <Link href="/">Home</Link> |{' '}
-          <Link href="/login">Login</Link> |{' '}
-          <Link href="/signup">Sign Up</Link> |{' '}
-          <Link href="/dashboard">Dashboard</Link>
-        </nav>
+        <Navbar />
         <main>{children}</main>
       </body>
     </html>
