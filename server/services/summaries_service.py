@@ -25,19 +25,15 @@ def upload_summary(token, summary_text, summary_name):
 def get_summaries(token):
     email = decode_jwt_token(token)
     if not email:
-        return None, "Invalid token"
+        raise ValueError("Invalid token")
     
-    try:
-        db = get_db()
-        user = db.users.find_one({"email": email})
-        
-        if not user:
-            return None, "User not found"
-        
-        return user.get("summaries", []), None
-        
-    except Exception as e:
-        return None, f"Error connecting to database: {e}"
+    db = get_db()
+    user = db.users.find_one({"email": email})
+    
+    if not user:
+        raise ValueError("User not found")
+    
+    return user.get("summaries", [])
 
 def get_summary(token, summary_id):
     email = decode_jwt_token(token)
