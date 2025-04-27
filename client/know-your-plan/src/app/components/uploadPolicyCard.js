@@ -60,7 +60,7 @@ export default function UploadPolicyCard() {
         <h1 className="mb-6 text-5xl font-bold text-[#2f5bea]">Upload Your Policy</h1>
 
         <p className="mb-12 text-xl text-gray-800 max-w-2xl">
-          Upload your insurance document (PDF or DOC) to generate your summary!
+          Upload your insurance document (PDF) to generate your summary!
         </p>
         
         <form onSubmit={moveToSummary}>
