@@ -22,7 +22,7 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
       <section className="bg-[#BBDEFB] py-16">
-        <div className="container mx-auto px-4 flex justify-between items-center">
+        <div className="container mx-auto px-4 flex items-center justify-center">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-bold text-[#002c5e] mb-4">Plans as Clear as You Deserve</h1>
             <p className="text-lg text-[#444444] mb-6">

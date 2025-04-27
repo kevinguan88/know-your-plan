@@ -25,7 +25,6 @@ export default function SignUpPage()  {
             setToken(data.token);
             console.log(data.token);
             router.push('/dashboard');
-            window.location.href = "/";
           } else {
             console.error(data.error);
           }
