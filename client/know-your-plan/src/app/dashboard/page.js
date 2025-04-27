@@ -1,4 +1,4 @@
-import PolicyCard from "./components/policy-card"
+import PolicyCard from "./policy-card"
 
 export default function Dashboard() {
   const policies = [
@@ -31,7 +31,7 @@ export default function Dashboard() {
   const styles = {
     container: {
       display: "flex",
-      flexDirection: "column",
+      flexDirection: "row",
       minHeight: "100vh",
       backgroundColor: "#f8fafc",
     },
@@ -69,35 +69,13 @@ export default function Dashboard() {
       gap: "0.5rem",
     },
     cardsContainer: {
-      display: "grid",
-      gridTemplateColumns: "repeat(1, 1fr)",
+      display: "flex",
+      flexWrap: "wrap",
       gap: "1.5rem",
       width: "100%",
       maxWidth: "1200px",
-      "@media (min-width: 640px)": {
-        gridTemplateColumns: "repeat(2, 1fr)",
-      },
-      "@media (min-width: 1024px)": {
-        gridTemplateColumns: "repeat(3, 1fr)",
-      },
+      justifyContent: "center",
     },
-  }
-
-  // Apply responsive styles manually since we can't use media queries with inline styles
-  const getCardsContainerStyle = () => {
-    const baseStyle = { ...styles.cardsContainer }
-    delete baseStyle["@media (min-width: 640px)"]
-    delete baseStyle["@media (min-width: 1024px)"]
-
-    if (typeof window !== "undefined") {
-      if (window.innerWidth >= 1024) {
-        baseStyle.gridTemplateColumns = "repeat(3, 1fr)"
-      } else if (window.innerWidth >= 640) {
-        baseStyle.gridTemplateColumns = "repeat(2, 1fr)"
-      }
-    }
-
-    return baseStyle
   }
 
   return (
@@ -110,7 +88,7 @@ export default function Dashboard() {
           <span>+</span> Upload New Policy
         </button>
 
-        <div style={getCardsContainerStyle()}>
+        <div style={styles.cardsContainer}>
           {policies.map((policy) => (
             <PolicyCard
               key={policy.id}
