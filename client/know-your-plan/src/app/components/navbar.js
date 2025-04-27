@@ -7,6 +7,7 @@ export default function Navbar() {
         <Link href="/" className="text-[#2f5bea] text-2xl font-bold">
           KnowYourPlan
         </Link>
+
         <div className="flex items-center gap-6">
           <Link href="/login" className="text-[#2f5bea] font-medium">
             Login
@@ -19,3 +20,4 @@ export default function Navbar() {
     </nav>
   )
 }
+

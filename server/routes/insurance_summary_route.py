@@ -14,7 +14,7 @@ def upload():
     
     token = auth_header.split(" ")[1] if " " in auth_header else auth_header    
     
-    data = request.get_json()
+    data = request.form
     summary_name = data.get("summaryName")
     insurance_doc = request.files.get("policy")
     
@@ -37,7 +37,7 @@ def dummy_upload():
     
     token = auth_header.split(" ")[1] if " " in auth_header else auth_header    
     
-    data = request.get_json()
+    data = request.form
     summary_name = data.get("summaryName")
     insurance_doc = request.files.get("policy")
     
@@ -60,7 +60,7 @@ def summaries():
     token = auth_header.split(" ")[1] if " " in auth_header else auth_header
     summaries = get_summaries(token)
     
-    return jsonify({"summaries": summaries}), 200 if summaries else 500
+    return jsonify({"summaries": summaries}), 200
 
 @summarize_bp.route("/get-summary/<summary_id>", methods=["GET"])
 def get_summary_by_id(summary_id):
@@ -76,10 +76,22 @@ def get_summary_by_id(summary_id):
     
     summary = get_summary(token, summary_id)
     
+    return jsonify({"summary": summary}), 200 
+
+@summarize_bp.route("/dummy-make-summary", methods=["POST"])
+def dummy_make_summary():
+    insurance_doc = request.files.get("policy")
+    
+    if insurance_doc and not insurance_doc.filename.endswith(".pdf"):
+        return jsonify({"error": "Only PDF files are allowed"}), 400
+    if not insurance_doc:
+        return jsonify({"error": "Insurance document is required"}), 400
+    
+    summary = "BLA BLA BLA"
+    
     return jsonify({"summary": summary}), 200 if summary else 500
 
-
-@summarize_bp.route("/make-summary", methods=["GET"])
+@summarize_bp.route("/make-summary", methods=["POST"])
 def make_summary():
     insurance_doc = request.files.get("policy")
     

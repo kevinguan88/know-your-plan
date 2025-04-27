@@ -1,6 +1,41 @@
-import React from 'react';
+"use client"
 
-function App() {
+import React from 'react';
+import { useRouter } from 'next/navigation';
+import { setToken } from '../utils/authUtils';
+import { useState } from 'react';
+
+export default function SignUpPage()  {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const router = useRouter();
+  
+  const handleLogin = async (e) => {
+      e.preventDefault();
+  
+      try {
+        const res = await fetch('https://know-your-plan.onrender.com/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.token) {
+            setToken(data.token);
+            console.log(data.token);
+            router.push('/dashboard');
+            window.location.href = "/";
+          } else {
+            console.error(data.error);
+          }
+        });
+      } catch (error) {
+        console.error(error);
+        alert('Login failed.');
+      }
+    };
+
   const styles = {
     container: {
       display: 'flex',
@@ -98,20 +133,29 @@ function App() {
         <h1 style={styles.title}>Login</h1>
         <div style={styles.underline}></div>
 
-        <form style={styles.form}>
+        <form onSubmit={handleLogin} style={styles.form}>
           <div style={styles.inputGroup}>
             <span style={styles.icon}>✉️</span>
-            <input type="email" placeholder="Email Address" style={styles.input} />
+            <input 
+              type="email" 
+              placeholder="Email Address" 
+              style={styles.input}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
 
           <div style={styles.inputGroup}>
             <span style={styles.icon}>🔒</span>
-            <input type="password" placeholder="Password" style={styles.input} />
+            <input 
+              type="password" 
+              placeholder="Password" 
+              style={styles.input}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
-
         
           <div style={styles.buttonGroup}>
-            <button type="button" style={styles.loginButton}>
+            <button type="submit" style={styles.loginButton}>
               Login
             </button>
           </div>
@@ -120,5 +164,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
