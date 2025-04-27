@@ -2,21 +2,28 @@
 
 import { FileText } from 'lucide-react'
 import { useState } from 'react'
+import { getToken } from '../utils/authUtils'
 
 export default function UploadPolicyCard() {
-    const [file, setFile] = useState(null)
+    const [policy, setPolicy] = useState(null)
+    const [summaryName, setSummaryName] = useState('')
+    const token = getToken();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
     
-        if (!file) return alert('Please select a file.');
+        if (!policy) return alert('Please select a file.');
     
         const formData = new FormData();
-        formData.append('file', file);
+        formData.append('policy', policy);
+        formData.append('summaryName', summaryName);
     
         try {
-          const res = await fetch('https://your-api-on-render.com/upload', {
+          const res = await fetch('https://know-your-plan.onrender.com/summarize/upload-summary', {
             method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`, // 👈 only add this
+              },            
             body: formData,
           });
     
@@ -43,26 +50,32 @@ export default function UploadPolicyCard() {
         </p>
         
         <form onSubmit={handleSubmit}>
-            {!file && (
+            {!policy && (
               <label className="px-8 py-4 text-xl font-medium text-white bg-orange-400 rounded-lg hover:bg-orange-500 transition-colors cursor-pointer">
                 Upload Document
                 <input 
                   type="file" 
                   accept="application/pdf" 
-                  onChange={(e) => setFile(e.target.files[0])} 
+                  onChange={(e) => {
+                    const selectedFile = e.target.files[0];
+                    if (selectedFile) {
+                      setPolicy(selectedFile);
+                      setSummaryName(selectedFile.name); // 👈 set summary name here
+                    }
+                  }}                  
                   className="hidden"
                 />
               </label>
             )}
             
-            {file && (
+            {policy && (
               <>
                 <div className="mt-4 text-gray-700 text-lg flex items-center">
-                  Selected File: <span className="font-semibold">{file.name}</span>
+                  Selected File: <span className="font-semibold">{policy.name}</span>
                   <button 
                     type="button"
                     className="ml-2 text-gray-600 hover:text-gray-800 focus:outline-none transition-colors"
-                    onClick={() => setFile(null)}
+                    onClick={() => setPolicy(null)}
                   >
                     &times;
                   </button>
