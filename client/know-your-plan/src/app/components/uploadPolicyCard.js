@@ -16,10 +16,9 @@ export default function UploadPolicyCard() {
     
         const formData = new FormData();
         formData.append('policy', policy);
-        formData.append('summaryName', summaryName);
     
         try {
-          const res = await fetch('https://know-your-plan.onrender.com/summarize/dummy-upload-summary', {
+          const res = await fetch('https://know-your-plan.onrender.com/summarize/dummy-make-summary', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`, // 👈 only add this
