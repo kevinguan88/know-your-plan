@@ -47,7 +47,7 @@ export default function Navbar() {
 
 
   return (
-    <nav style={navbarStyles} className="w-full">
+    <nav className="w-full">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <Link href="/" className="text-[#2f5bea] text-2xl font-bold">
           KnowYourPlan
