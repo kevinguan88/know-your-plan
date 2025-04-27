@@ -1,6 +1,23 @@
+"use client"
+
 import Link from "next/link"
+import Cookie from 'js-cookie';
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react';
+import { getToken } from "./utils/authUtils";
 
 export default function Home() {
+  const router = useRouter();
+
+  useEffect(() => {
+    // Check if the user is logged in by looking for the token in cookies
+    const token = getToken();
+    if (token) {
+      // If token exists, redirect the user to the dashboard or home page
+      router.push('/dashboard'); // Change this to your desired page
+    }
+  }, [router]);
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}

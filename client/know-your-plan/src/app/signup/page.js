@@ -1,15 +1,18 @@
 "use client"
 
 import React from 'react';
-import { useAuth } from '@/app/context/AuthContext'; // adjust path
 import { useState } from 'react';
+import Cookie from 'js-cookie';
+import { setToken } from '../utils/authUtils';
+import { useRouter } from 'next/navigation';
+
 
 
 export default function SignUpPage()  {
-  const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const router = useRouter();
 
   const styles = {
     container: {
@@ -119,8 +122,10 @@ export default function SignUpPage()  {
       .then((res) => res.json())
       .then((data) => {
         if (data.token) {
-          localStorage.setItem('token', data.token);
+          setToken(data.token);
           console.log(data.token);
+          router.push('/dashboard');
+          window.location.href = "/";
         } else {
           console.error(data.error);
         }
