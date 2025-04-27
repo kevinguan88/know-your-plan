@@ -33,7 +33,7 @@ export default function Home() {
             <p className="text-[#444444] italic mb-8">
               A large nationally representative survey found that 50% of adults aren&apos;t
               <br />
-              confident using insurance, and only 16% can calculate our of pocket costs -
+              confident using insurance, and only 16% can calculate out of pocket costs -
               <Link href="#" className="text-[#444444] underline">
                 pmc
               </Link>
