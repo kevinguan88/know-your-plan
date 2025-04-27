@@ -60,7 +60,7 @@ def summaries():
     token = auth_header.split(" ")[1] if " " in auth_header else auth_header
     summaries = get_summaries(token)
     
-    return jsonify({"summaries": summaries}), 200 if summaries else 500
+    return jsonify({"summaries": summaries}), 200
 
 @summarize_bp.route("/get-summary/<summary_id>", methods=["GET"])
 def get_summary_by_id(summary_id):
