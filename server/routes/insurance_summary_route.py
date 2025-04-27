@@ -78,7 +78,7 @@ def get_summary_by_id(summary_id):
     
     return jsonify({"summary": summary}), 200 if summary else 500
 
-@summarize_bp.route("/dummy-make-summary", methods=["GET"])
+@summarize_bp.route("/dummy-make-summary", methods=["POST"])
 def dummy_make_summary():
     insurance_doc = request.files.get("policy")
     
@@ -91,7 +91,7 @@ def dummy_make_summary():
     
     return jsonify({"summary": summary}), 200 if summary else 500
 
-@summarize_bp.route("/make-summary", methods=["GET"])
+@summarize_bp.route("/make-summary", methods=["POST"])
 def make_summary():
     insurance_doc = request.files.get("policy")
     
