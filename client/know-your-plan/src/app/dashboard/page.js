@@ -1,6 +1,16 @@
+"use client";
+
+import { use } from "react";
 import PolicyCard from "./policy-card.js"
+import { getToken } from "@/app/utils/authUtils.js"
+import { useEffect } from "react";
+import { useRouter } from 'next/navigation'
+import Link from "next/link.js";
+
 
 export default function Dashboard() {
+  const token = getToken();
+
   const policies = [
     {
       id: 1,
@@ -23,7 +33,7 @@ export default function Dashboard() {
     {
       id: 4,
       title: "Aetna Coverage",
-      description: "pee pee poo poo",
+      description: "Check-ups covered. Prescriptions and specialists require copay.",
       removalTime: "5 Days",
     },
   ]
@@ -77,6 +87,7 @@ export default function Dashboard() {
       justifyContent: "center",
     },
   }
+  
 
   return (
     <div style={styles.container}>
@@ -84,9 +95,9 @@ export default function Dashboard() {
         <h1 style={styles.title}>Welcome to Your Dashboard</h1>
         <p style={styles.subtitle}>Here are your uploaded policies and summaries:</p>
 
-        <button style={styles.uploadButton}>
+        <Link href="/upload" style={styles.uploadButton}>
           <span>+</span> Upload New Policy
-        </button>
+        </Link>
 
         <div style={styles.cardsContainer}>
           {policies.map((policy) => (
