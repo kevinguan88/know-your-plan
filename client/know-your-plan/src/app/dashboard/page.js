@@ -1,4 +1,4 @@
-import PolicyCard from "./policy-card"
+import PolicyCard from "./policy-card.js"
 
 export default function Dashboard() {
   const policies = [
