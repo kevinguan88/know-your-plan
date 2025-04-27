@@ -1,9 +1,9 @@
 "use client"; // This marks the component as a client-side component
 
 import React, { useState } from "react";
-import Link from "next/link"; // Don't forget to import Link from next/link
+import Link from "next/link"; // Import Link for navigation
 
-const FirstTimePage = () => {
+const LovedOnes = () => {
   const [showCard, setShowCard] = useState(true);
 
   // Handle button click to hide the card
@@ -35,8 +35,7 @@ const FirstTimePage = () => {
               boxSizing: "border-box",
             }}
           >
-            {/* Link component wraps the button */}
-            <Link href="/firsttime"> 
+            <Link href="/firsttime">
               <button
                 onClick={handleCloseCard}
                 style={{
@@ -75,7 +74,7 @@ const FirstTimePage = () => {
                 marginBottom: "20px",
               }}
             >
-              Supporting You and Loved Ones with Insurance Clarity
+              New to Insurance? We’ve Got You!
             </h1>
             <p
               style={{
@@ -86,25 +85,29 @@ const FirstTimePage = () => {
                 maxWidth: "700px",
               }}
             >
-              KnowYourPlan simplifies complicated insurance policies so you and your loved ones can confidently make the best decisions — without worrying about hidden clauses, fees, or confusing fine print.
+              If you're navigating insurance for the first time, KnowYourPlan translates all the complex legal and financial terms into easy, human language. Upload your plan and gain confidence in your coverage today.
             </p>
-            <button
-              style={{
-                backgroundColor: "#ff9933",
-                color: "white",
-                border: "none",
-                borderRadius: "5px",
-                padding: "15px 30px",
-                fontSize: "18px",
-                fontWeight: "bold",
-                cursor: "pointer",
-                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-              }}
-              onMouseOver={(e) => (e.target.style.backgroundColor = "#e68a2e")}
-              onMouseOut={(e) => (e.target.style.backgroundColor = "#ff9933")}
-            >
-              Continue to Upload
-            </button>
+
+            {/* Link for Continue to Upload */}
+            <Link href="/upload">
+              <button
+                style={{
+                  backgroundColor: "#ff9933",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "5px",
+                  padding: "15px 30px",
+                  fontSize: "18px",
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                }}
+                onMouseOver={(e) => (e.target.style.backgroundColor = "#e68a2e")}
+                onMouseOut={(e) => (e.target.style.backgroundColor = "#ff9933")}
+              >
+                Continue to Upload
+              </button>
+            </Link>
           </div>
         </div>
       )}
@@ -112,4 +115,4 @@ const FirstTimePage = () => {
   );
 };
 
-export default FirstTimePage;
+export default LovedOnes;
