@@ -4,10 +4,6 @@ import requests
 import json
 import pandas as pd
 import re
-from dotenv import load_dotenv
-import os
-load_dotenv()
-API_KEY = os.getenv("API_KEY")
 
 def summarize_text(text):
     payload = {
@@ -15,16 +11,7 @@ def summarize_text(text):
         "messages": [
             {
                 "role": "user",
-                "content": """ Summarize the following insurance policy into a concise breakdown with the following structure:
-    
-Plan Info: Provide a summary of the plan type, coverage period, and coverage details (e.g., individual or family).
-What You’ll Pay: List key financial details such as deductibles, out-of-pocket maximums, and prescription costs. Include both in-network and out-of-network details.
-Potential Red Flags or “Gotchas”: Highlight any aspects of the policy that might be problematic or unexpected, such as separate deductibles, balance billing, or non-covered services.
-Summary of Risks: Provide a concise summary of the potential out-of-pocket costs and risks associated with the plan (e.g., how much the individual would pay before coverage kicks in and any other potential issues).
-
-    Make sure to include any key numbers, amounts, and details for each section, and organize them clearly.
-
-    Here is the insurance policy text to summarize: {text}"""
+                "content": "Summarize the following insurance document text, including a section on red flags in the policy that people will not be wary to:\n\n" + text
             }
         ],
         "temperature": 0.3,
@@ -33,41 +20,15 @@ Summary of Risks: Provide a concise summary of the potential out-of-pocket costs
     response = requests.post(
         url="https://openrouter.ai/api/v1/chat/completions",
         headers={
-            "Authorization": API_KEY,
+            "Authorization": "Bearer KEY",
             "Content-Type": "application/json",
             # "HTTP-Referer": "<YOUR_SITE_URL>", # Optional. Site URL for rankings on openrouter.ai.
             # "X-Title": "<YOUR_SITE_NAME>", # Optional. Site title for rankings on openrouter.ai.
         },
         data=json.dumps(payload)
         )
-    
-    try:
-        response = requests.post(
-            url="https://openrouter.ai/api/v1/chat/completions",  # Verify if this is the correct URL
-            headers={
-                "Authorization": f"Bearer {API_KEY}",
-                "Content-Type": "application/json"
-            },
-            data=json.dumps(payload)
-        )
+    return response.json()["choices"][0]["message"]["content"]
 
-        # Check the response status code
-        if response.status_code == 200:
-            try:
-                # Try to parse the JSON response
-                response_data = response.json()
-                print(response_data)  # For debugging purposes
-                return response_data["choices"][0]["message"]["content"]
-            except json.JSONDecodeError:
-                print("Error parsing JSON response:", response.text)
-                return None
-        else:
-            print(f"Request failed with status code {response.status_code}: {response.text}")
-            return None
-    except requests.exceptions.RequestException as e:
-        print(f"Request failed: {e}")
-        return None
-    
 def extract_page_without_table(text):
     cleaned_text = clean_malformed_text(text)
     with open("final.txt", 'a', encoding="utf-8") as f:
@@ -168,30 +129,53 @@ def extract_page_with_table(text, table):
         f.writelines(new_content)
         
 
-def extract_and_summarize(file_obj):
+def extract_and_summarize(pdf):
     """
-    Modified to accept a file object instead of a file path.
+    - 
+    - Try-except block with 
+    -   with pdfplumber.open(pdf) as insurance_file:
+    -       extract number of pages
+    -       for i in range(0,num_of_pages)
+    -           page = pdf.pages[i]
+    -           table = page.extract_table()
+    -           text = page.extract_text
+    -           if table & text: 
+                    extract_table_and_text()
+    -           if table & text is None:
+                    extraction error
+    -           if text & table is None:
+    -               extract_text()
+                else: 
+                    extraction error
+    -           
+    - except FileNotFoundError
+    - except Exception e 
+    - extract number of pages in pdf
+    - 
+    - open final.txt, make checks (try-block)
+    - read document
+    - summary = summarize(document) --> API Call
+    - return summary
+
     """
-    # Clear final.txt
     with open("final.txt", 'w', encoding="utf-8") as f:
         f.close()
 
-    try:
-        with pdfplumber.open(file_obj) as insurance_file:
+    try: 
+        with pdfplumber.open(pdf) as insurance_file:
             num_of_pages = len(insurance_file.pages)
+            # print(num_of_pages)
             for i in range(num_of_pages):
                 page = insurance_file.pages[i]
-                try:
+                try: 
                     text = page.extract_text()
                 except Exception as e:
-                    print(f"Error extracting text on page {i + 1}: {e}")
-                    text = None
+                    print("error with page")
 
-                try:
+                try: 
                     table = page.extract_table()
                 except Exception as e:
-                    print(f"Error extracting table on page {i + 1}: {e}")
-                    table = None
+                    print("error with table")
 
                 if table and text:
                     extract_page_with_table(text, table)  # Process both table and text
@@ -201,17 +185,24 @@ def extract_and_summarize(file_obj):
                     print(f"Extracting text only on page {i + 1}.")
                     extract_page_without_table(text)
                 else:
-                    print(f"Unknown extraction error on page {i + 1}.")
+                    print(f"Error")
+    except FileNotFoundError:
+        print(f"The file {pdf} was not found.")
     except Exception as e:
-        print(f"Failed to open or process the PDF: {e}")
+        print("error", {e}, '\n', text, table)
 
-    # Summarize the cleaned content
     with open('final.txt', 'r', encoding='utf-8') as f:
         file_content = f.read()
-        
     summary = summarize_text(file_content)
+    #print(summary)
     return summary
 
 
+def main():
+    pdf = "Dental1000Plan.pdf"
+    summary = extract_and_summarize(pdf)
+    print("=== DOCUMENT SUMMARY ===\n")
+    print(summary)
+    #return summary
 
-
+main()
