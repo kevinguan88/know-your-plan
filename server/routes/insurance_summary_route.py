@@ -78,6 +78,18 @@ def get_summary_by_id(summary_id):
     
     return jsonify({"summary": summary}), 200 if summary else 500
 
+@summarize_bp.route("/dummy-make-summary", methods=["GET"])
+def dummy_make_summary():
+    insurance_doc = request.files.get("policy")
+    
+    if insurance_doc and not insurance_doc.filename.endswith(".pdf"):
+        return jsonify({"error": "Only PDF files are allowed"}), 400
+    if not insurance_doc:
+        return jsonify({"error": "Insurance document is required"}), 400
+    
+    summary = "BLA BLA BLA"
+    
+    return jsonify({"summary": summary}), 200 if summary else 500
 
 @summarize_bp.route("/make-summary", methods=["GET"])
 def make_summary():
