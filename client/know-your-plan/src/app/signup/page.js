@@ -115,16 +115,16 @@ export default function SignUpPage()  {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.token) {
+          localStorage.setItem('token', data.token);
+          console.log(data.token);
+        } else {
+          console.error(data.error);
+        }
       });
-
-      if (!res.ok) {
-        throw new Error('Failed to create account');
-      }
-
-      const data = await res.json();
-      const jwtToken = data.token; // adjust based on what your API returns
-
-      login(jwtToken); // stores in localStorage + fetch user
     } catch (error) {
       console.error(error);
       alert('Signup failed.');
