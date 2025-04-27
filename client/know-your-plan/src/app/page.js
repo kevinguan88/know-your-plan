@@ -16,10 +16,8 @@ export default function Home() {
             <p className="text-[#444444] italic mb-8">
               A large nationally representative survey found that 50% of adults aren&apos;t
               <br />
-              confident using insurance, and only 16% can calculate our of pocket costs -
-              <Link href="#" className="text-[#444444] underline">
-                pmc
-              </Link>
+              confident using insurance, and only 16% can calculate out of pocket costs - 
+              <Link href="#" className="text-[#444444] underline"> pmc </Link>
             </p>
           </div>
           <Link
@@ -40,23 +38,23 @@ export default function Home() {
           </p>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {/* Card 1 */}
-            <div className="bg-white p-8 rounded-xl shadow-lg">
+            {/* Card Button 1 */}
+            <Link href="/firsttime" className="block bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
               <h3 className="text-xl font-bold text-[#2f5bea] mb-4">For First-Time Users</h3>
               <p className="text-[#444444]">
                 Got handed an insurance plan you don&apos;t understand? Upload it now and we&apos;ll summarize it in
-                plain language
+                plain language.
               </p>
-            </div>
+            </Link>
 
-            {/* Card 2 */}
-            <div className="bg-white p-8 rounded-xl shadow-lg">
+            {/* Card Button 2 */}
+            <Link href="/lovedones" className="block bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
               <h3 className="text-xl font-bold text-[#2f5bea] mb-4">For You and Loved Ones</h3>
               <p className="text-[#444444]">
                 Understand complicated insurance paperwork and spot hidden fees or confusing clauses to better support
                 your loved ones.
               </p>
-            </div>
+            </Link>
           </div>
         </div>
       </section>

@@ -13,7 +13,7 @@ export default function Navbar() {
           KnowYourPlan
         </Link>
         <div className="flex items-center gap-6">
-          <Link href="/dashboard" className="text-[#2f5bea] font-medium">
+          <Link href="/login" className="text-[#2f5bea] font-medium">
             Login
           </Link>
           <Link href="/signup" className="bg-[#2f5bea] text-[#ffffff] px-6 py-2 rounded-lg font-medium">
