@@ -1,6 +1,13 @@
+"use client";
+
+import { use } from "react";
 import PolicyCard from "./policy-card.js"
+import { getToken } from "@/app/utils/authUtils.js"
+import { useEffect } from "react";
 
 export default function Dashboard() {
+  const token = getToken();
+
   const policies = [
     {
       id: 1,
@@ -77,6 +84,7 @@ export default function Dashboard() {
       justifyContent: "center",
     },
   }
+  
 
   return (
     <div style={styles.container}>
