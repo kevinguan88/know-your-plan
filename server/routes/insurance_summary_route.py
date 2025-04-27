@@ -14,7 +14,7 @@ def upload():
     
     token = auth_header.split(" ")[1] if " " in auth_header else auth_header    
     
-    data = request.get_json()
+    data = request.form
     summary_name = data.get("summaryName")
     insurance_doc = request.files.get("policy")
     
@@ -37,7 +37,7 @@ def dummy_upload():
     
     token = auth_header.split(" ")[1] if " " in auth_header else auth_header    
     
-    data = request.get_json()
+    data = request.form
     summary_name = data.get("summaryName")
     insurance_doc = request.files.get("policy")
     
