@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from services.summaries_service import upload_summary, get_summaries, get_summary, delete_summary
-from services.ai_service import dummy_ai_service
+from services.ai_service import extract_and_summarize
 
 summarize_bp = Blueprint("summarize", __name__)
 
@@ -23,7 +23,7 @@ def upload():
     if not insurance_doc:
         return jsonify({"error": "Insurance document is required"}), 400
     
-    summary = dummy_ai_service(insurance_doc)
+    summary = extract_and_summarize(insurance_doc)
     upload_summary(token, summary, summary_name)
 
     return jsonify({"message": "Summary uploaded"}), 200
@@ -46,7 +46,7 @@ def dummy_upload():
     if not insurance_doc:
         return jsonify({"error": "Insurance document is required"}), 400
     
-    upload_summary(token, "I AM A DUMMY", summary_name)
+    upload_summary(token, "summary", summary_name)
 
     return jsonify({"message": "Summary uploaded"}), 200
 
@@ -87,7 +87,7 @@ def dummy_make_summary():
     if not insurance_doc:
         return jsonify({"error": "Insurance document is required"}), 400
     
-    summary = "BLA BLA BLA"
+    summary = "summary"
     
     return jsonify({"summary": summary}), 200 if summary else 500
 
@@ -100,7 +100,7 @@ def make_summary():
     if not insurance_doc:
         return jsonify({"error": "Insurance document is required"}), 400
     
-    summary = dummy_ai_service(insurance_doc)
+    summary = extract_and_summarize(insurance_doc)
     
     return jsonify({"summary": summary}), 200 if summary else 500
 
