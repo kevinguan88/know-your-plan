@@ -1,6 +1,16 @@
-import React from 'react';
+"use client"
 
-function App() {
+import React from 'react';
+import { useAuth } from '@/app/context/AuthContext'; // adjust path
+import { useState } from 'react';
+
+
+export default function SignUpPage()  {
+  const { login } = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
   const styles = {
     container: {
       display: 'flex',
@@ -92,26 +102,71 @@ function App() {
     },
   };
 
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+
+    if (password !== confirmPassword) {
+      alert('Passwords do not match.');
+      return;
+    }
+
+    try {
+      const res = await fetch('https://know-your-plan.onrender.com/auth/create-user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to create account');
+      }
+
+      const data = await res.json();
+      const jwtToken = data.token; // adjust based on what your API returns
+
+      login(jwtToken); // stores in localStorage + fetch user
+    } catch (error) {
+      console.error(error);
+      alert('Signup failed.');
+    }
+  };
+
+
   return (
     <div style={styles.container}>
       <div style={styles.formCard}>
         <h1 style={styles.title}>Sign Up</h1>
         <div style={styles.underline}></div>
 
-        <form style={styles.form}>
+        <form onSubmit={handleSignUp} style={styles.form}>
           <div style={styles.inputGroup}>
             <span style={styles.icon}>✉️</span>
-            <input type="email" placeholder="Email Address" style={styles.input} />
+            <input 
+              type="email" 
+              placeholder="Email Address" 
+              style={styles.input}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
 
           <div style={styles.inputGroup}>
             <span style={styles.icon}>🔒</span>
-            <input type="password" placeholder="Create Password" style={styles.input} />
+            <input 
+              type="password" 
+              placeholder="Create Password" 
+              style={styles.input}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
 
           <div style={styles.inputGroup}>
             <span style={styles.icon}>🔒</span>
-            <input type="password" placeholder="Confirm Password" style={styles.input} />
+            <input 
+              type="password" 
+              placeholder="Confirm Password" 
+              style={styles.input} 
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
           </div>
 
           <div style={styles.buttonGroup}>
@@ -127,5 +182,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

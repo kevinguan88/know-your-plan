@@ -14,8 +14,8 @@ def upload():
     
     token = auth_header.split(" ")[1] if " " in auth_header else auth_header    
     
-
-    summary_name = request.form.get("summaryName")
+    data = request.get_json()
+    summary_name = data.get("summaryName")
     insurance_doc = request.files.get("policy")
     
     if insurance_doc and not insurance_doc.filename.endswith(".pdf"):
@@ -25,6 +25,28 @@ def upload():
     
     summary = dummy_ai_service(insurance_doc)
     upload_summary(token, summary, summary_name)
+
+    return jsonify({"message": "Summary uploaded"}), 200
+
+@summarize_bp.route("/dummy-upload-summary", methods=["POST"])
+def dummy_upload():
+    auth_header = request.headers.get("Authorization")
+    
+    if not auth_header:
+        return jsonify({"error": "Authorization header is missing"}), 401
+    
+    token = auth_header.split(" ")[1] if " " in auth_header else auth_header    
+    
+    data = request.get_json()
+    summary_name = data.get("summaryName")
+    insurance_doc = request.files.get("policy")
+    
+    if insurance_doc and not insurance_doc.filename.endswith(".pdf"):
+        return jsonify({"error": "Only PDF files are allowed"}), 400
+    if not insurance_doc:
+        return jsonify({"error": "Insurance document is required"}), 400
+    
+    upload_summary(token, "I AM A DUMMY", summary_name)
 
     return jsonify({"message": "Summary uploaded"}), 200
 
@@ -83,22 +105,6 @@ def delete(summary_id):
     return jsonify({"message": "Summary deleted successfully"}), 200 
     
     
-@summarize_bp.route("/dummy-upload", methods=["POST"])
-def dummy_upload():
-    auth_header = request.headers.get("Authorization")
-
-    if not auth_header:
-        return jsonify({"error": "Authorization header is missing"}), 401
-
-    token = auth_header.split(" ")[1] if " " in auth_header else auth_header    
-
-
-    summary_name = request.form.get("summaryName")
-
-    
-    upload_summary(token, "PEE PEE POO POO", summary_name)
-
-    return jsonify({"message": "Dummy route accessed"}), 200    
 
 
     
