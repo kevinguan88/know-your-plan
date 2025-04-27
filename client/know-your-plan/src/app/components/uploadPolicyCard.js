@@ -19,13 +19,20 @@ export default function UploadPolicyCard() {
         formData.append('summaryName', summaryName);
     
         try {
-          const res = await fetch('https://know-your-plan.onrender.com/summarize/upload-summary', {
+          const res = await fetch('https://know-your-plan.onrender.com/summarize/dummy-upload-summary', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`, // 👈 only add this
               },            
             body: formData,
           });
+
+          if (!res.ok) {
+            const text = await res.text();
+            console.error('Server responded with error:', res.status, text);
+            alert(`Server error: ${res.status}`);
+            return;
+          }
     
           const data = await res.json();
           console.log(data);
