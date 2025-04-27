@@ -49,7 +49,7 @@ export default function Navbar() {
   return (
     <nav className="w-full">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <Link href="/" className="text-[#2f5bea] text-2xl font-bold">
+        <Link href={token ? "/dashboard" : "/"} className="text-[#2f5bea] text-2xl font-bold">
           KnowYourPlan
         </Link>
 
@@ -58,9 +58,9 @@ export default function Navbar() {
             <button
               className="text-[#2f5bea] font-medium"
               onClick={() => {
-                Cookies.remove("token")
-                setToken(null)
-                router.push("/")
+                Cookies.remove("token");
+                setToken(null);
+                router.push("/");
               }}
             >
               Log Out
