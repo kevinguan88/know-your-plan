@@ -76,7 +76,7 @@ def get_summary_by_id(summary_id):
     
     summary = get_summary(token, summary_id)
     
-    return jsonify({"summary": summary}), 200 if summary else 500
+    return jsonify({"summary": summary}), 200 
 
 @summarize_bp.route("/dummy-make-summary", methods=["POST"])
 def dummy_make_summary():
