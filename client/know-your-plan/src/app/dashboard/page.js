@@ -33,7 +33,7 @@ export default function Dashboard() {
     {
       id: 4,
       title: "Aetna Coverage",
-      description: "pee pee poo poo",
+      description: "Check-ups covered. Prescriptions and specialists require copay.",
       removalTime: "5 Days",
     },
   ]

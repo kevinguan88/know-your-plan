@@ -3,11 +3,14 @@
 import { FileText } from 'lucide-react'
 import { useState } from 'react'
 import { getToken } from '../utils/authUtils'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 export default function UploadPolicyCard() {
     const [policy, setPolicy] = useState(null)
     const [summaryName, setSummaryName] = useState('')
     const token = getToken();
+    const router = useRouter();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -42,6 +45,11 @@ export default function UploadPolicyCard() {
         }
       };
 
+
+    const moveToSummary = () => {
+      router.push('/summary');
+    };
+
   return (
     <div className="w-full max-w-3xl p-12 mx-auto bg-white rounded-3xl shadow-lg">
       <div className="flex flex-col items-center text-center">
@@ -55,7 +63,7 @@ export default function UploadPolicyCard() {
           Upload your insurance document (PDF or DOC) to generate your summary!
         </p>
         
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={moveToSummary}>
             {!policy && (
               <label className="px-8 py-4 text-xl font-medium text-white bg-orange-400 rounded-lg hover:bg-orange-500 transition-colors cursor-pointer">
                 Upload Document
@@ -86,12 +94,13 @@ export default function UploadPolicyCard() {
                     &times;
                   </button>
                 </div>
-                <button 
-                  type="submit"
-                  className="mt-6 px-8 py-3 bg-[#2f5bea] text-white rounded-lg hover:bg-blue-700 transition-colors"
+                <Link 
+                  href="/summary"
+                  className="mt-6 inline-block px-8 py-3 bg-[#2f5bea] text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  style={{ padding: '0.75rem 2rem', display: 'inline-block', textAlign: 'center' }}
                 >
                   Submit
-                </button>
+                </Link>
               </>
             )}
             
