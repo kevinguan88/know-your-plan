@@ -1,8 +1,13 @@
-import Link from "next/link"
+import Link from "next/link";
 
 export default function Navbar() {
+  const navbarStyles = {
+    backgroundColor: "#f5f8fa",
+    boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)", // Custom shadow similar to the second header
+  };
+
   return (
-    <nav className="w-full bg-[#f5f8fa] shadow-sm">
+    <nav style={navbarStyles} className="w-full">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <Link href="/" className="text-[#2f5bea] text-2xl font-bold">
           KnowYourPlan
@@ -17,5 +22,5 @@ export default function Navbar() {
         </div>
       </div>
     </nav>
-  )
+  );
 }
