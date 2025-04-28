@@ -40,7 +40,7 @@ def summaries():
     
     return jsonify({"summaries": summaries}), 200
 
-@summarize_bp.route("/get-summary", methods=["GET"])
+@summarize_bp.route("/get-summary", methods=["POST"])
 def get_summary_by_id():
     auth_header = request.headers.get("Authorization")
     summary_id = request.get_json().get("summaryId")
