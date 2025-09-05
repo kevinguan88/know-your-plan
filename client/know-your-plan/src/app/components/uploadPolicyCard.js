@@ -39,6 +39,7 @@ export default function UploadPolicyCard() {
           const data = await res.json();
           console.log(data);
           alert('File uploaded successfully!');
+          moveToSummary();
         } catch (error) {
           console.error(error);
           alert('Something went wrong.');
@@ -63,7 +64,7 @@ export default function UploadPolicyCard() {
           Upload your insurance document (PDF) to generate your summary!
         </p>
         
-        <form onSubmit={moveToSummary}>
+        <form onSubmit={handleSubmit}>
             {!policy && (
               <label className="px-8 py-4 text-xl font-medium text-white bg-orange-400 rounded-lg hover:bg-orange-500 transition-colors cursor-pointer">
                 Upload Document
@@ -94,13 +95,13 @@ export default function UploadPolicyCard() {
                     &times;
                   </button>
                 </div>
-                <Link 
-                  href="/summary"
+                <button 
                   className="mt-6 inline-block px-8 py-3 bg-[#2f5bea] text-white rounded-lg hover:bg-blue-700 transition-colors"
                   style={{ padding: '0.75rem 2rem', display: 'inline-block', textAlign: 'center' }}
+                  type="submit"
                 >
                   Submit
-                </Link>
+                </button>
               </>
             )}
             
