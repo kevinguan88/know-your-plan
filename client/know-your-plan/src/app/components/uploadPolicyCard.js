@@ -12,6 +12,7 @@ export default function UploadPolicyCard() {
     const token = getToken();
     const router = useRouter();
 
+    let data = null;
     const handleSubmit = async (e) => {
         e.preventDefault();
     
@@ -36,7 +37,7 @@ export default function UploadPolicyCard() {
             return;
           }
     
-          const data = await res.json();
+          data = await res.json();
           console.log(data);
           alert('File uploaded successfully!');
           moveToSummary();
@@ -46,9 +47,8 @@ export default function UploadPolicyCard() {
         }
       };
 
-
     const moveToSummary = () => {
-      router.push('/summary');
+      router.push(`/summary?query=${JSON.stringify(data)}`);
     };
 
   return (

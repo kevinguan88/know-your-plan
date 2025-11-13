@@ -3,9 +3,11 @@
 import Link from "next/link"
 import { Download } from "lucide-react"
 import { useEffect, useState } from "react"
+import {useRouter} from 'next/navigation'
 
 export default function Summary() {
-
+    const router = useRouter();
+    const data = router.query
     const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -13,8 +15,10 @@ export default function Summary() {
     const timer = setTimeout(() => {
       setIsLoading(false)
     }, 1500) // 1.5 seconds loading animation
-
+    
+    console.log(data)
     return () => clearTimeout(timer)
+
   }, [])
 
   return (
@@ -26,7 +30,7 @@ export default function Summary() {
           <h1 className="text-[#2f5bea] text-3xl font-bold text-center mb-6 flex items-center justify-center gap-2">
             Policy Summary Overview
             <Download className="h-6 w-6" />
-          </h1>
+          </h1>   
 
           {/* Summary Card */}
           <div className="bg-white rounded-3xl p-8 shadow-lg mb-6">
